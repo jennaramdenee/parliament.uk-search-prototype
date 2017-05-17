@@ -16,6 +16,7 @@ require 'parliament/search/helpers'
 require 'i18n'
 require 'i18n/backend/fallbacks'
 
+
 module Parliament
   module Search
     class Application < Sinatra::Base

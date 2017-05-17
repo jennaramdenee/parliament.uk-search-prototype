@@ -70,6 +70,16 @@ RSpec.describe Parliament::Search::Application, vcr: true do
       end
     end
 
+    context 'prevent xss in search' do
+      before(:each) do
+        get '/', { q: '<script>alert(document.cookie)</script>' }
+      end
+
+      it 'should encode html' do
+        expect(last_request.query_string).not_to include('<')
+      end
+    end
+
     context '<br> tag in search results' do
       before(:each) do
         get '/results', { q: 'banana' }
@@ -79,5 +89,6 @@ RSpec.describe Parliament::Search::Application, vcr: true do
         expect(last_response.body).not_to include('<br>')
       end
     end
+
   end
 end
